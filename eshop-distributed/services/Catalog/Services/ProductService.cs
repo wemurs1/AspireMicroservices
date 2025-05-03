@@ -1,6 +1,8 @@
+using ServiceDefaults.Messaging.Events;
+
 namespace Catalog.Services;
 
-public class ProductService(ProductDbContext dbContext)
+public class ProductService(ProductDbContext dbContext, IBus bus)
 {
     public async Task<IEnumerable<Product>> GetProductsAsync()
     {
@@ -20,6 +22,19 @@ public class ProductService(ProductDbContext dbContext)
 
     public async Task UpdateProductAsync(Product updatedProduct, Product inputProduct)
     {
+        if (updatedProduct.Price != inputProduct.Price)
+        {
+            var integrationEvent = new ProductPriceChangeIntegrationEvent
+            {
+                ProductId = updatedProduct.Id,
+                Name = inputProduct.Name,
+                Description = inputProduct.Description,
+                Price = inputProduct.Price,
+                ImageUrl = inputProduct.ImageUrl
+            };
+            await bus.Publish(integrationEvent); // should use outbox pattern
+        }
+
         updatedProduct.Name = inputProduct.Name;
         updatedProduct.Description = inputProduct.Description;
         updatedProduct.ImageUrl = inputProduct.ImageUrl;

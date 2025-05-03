@@ -1,5 +1,3 @@
-using Catalog.Models;
-
 namespace Basket.ApiClients;
 
 public class CatalogApiClient(HttpClient httpClient)
