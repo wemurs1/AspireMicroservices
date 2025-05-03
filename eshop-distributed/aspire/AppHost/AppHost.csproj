@@ -14,9 +14,11 @@
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="9.2.1" />
     <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.2.1" />
+    <PackageReference Include="Aspire.Hosting.Redis" Version="9.2.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../../services/Basket/Basket.csproj" />
     <ProjectReference Include="../../services/Catalog/Catalog.csproj" />
   </ItemGroup>
 
