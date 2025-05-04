@@ -1,9 +1,11 @@
-global using System.Reflection;
-global using System.Text.Json;
 global using Basket.ApiClients;
 global using Basket.Endpoints;
 global using Basket.Models;
 global using Basket.Services;
 global using Catalog.Models;
+global using MassTransit;
 global using Microsoft.Extensions.Caching.Distributed;
 global using ServiceDefaults.Messaging;
+global using ServiceDefaults.Messaging.Events;
+global using System.Reflection;
+global using System.Text.Json;

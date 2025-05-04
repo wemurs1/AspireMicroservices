@@ -1,3 +1,4 @@
+
 namespace Basket.Services;
 
 public class BasketServices(IDistributedCache cache, CatalogApiClient catalogApiClient)
@@ -23,5 +24,17 @@ public class BasketServices(IDistributedCache cache, CatalogApiClient catalogApi
     public async Task DeleteBasket(string userName)
     {
         await cache.RemoveAsync(userName);
+    }
+
+    internal async Task UpdateBasketItemProductPrices(int productId, decimal price)
+    {
+        // Distributed cache does not support getting a list of keyes see - https://github.com/dotnet/runtime/issues/36402
+        var basket = await GetBasket("fred");
+        var item = basket!.Items.FirstOrDefault(x => x.ProductId == productId);
+        if (item != null)
+        {
+            item.Price = price;
+            await cache.SetStringAsync(basket.UserName, JsonSerializer.Serialize(basket));
+        }
     }
 }
