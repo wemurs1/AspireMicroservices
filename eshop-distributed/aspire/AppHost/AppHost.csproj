@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../../frontend/WebApp/WebApp.csproj" />
     <ProjectReference Include="../../services/Basket/Basket.csproj" />
     <ProjectReference Include="../../services/Catalog/Catalog.csproj" />
   </ItemGroup>
