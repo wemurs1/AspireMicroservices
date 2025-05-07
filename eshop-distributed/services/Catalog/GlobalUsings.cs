@@ -4,5 +4,6 @@ global using Catalog.Models;
 global using Catalog.Services;
 global using MassTransit;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.AI;
 global using ServiceDefaults.Messaging;
 global using System.Reflection;

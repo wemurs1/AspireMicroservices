@@ -31,12 +31,21 @@ if (builder.ExecutionContext.IsRunMode)
     keyCloak.WithDataVolume();
 }
 
+var ollama = builder.AddOllama("ollama", 11434)
+    .WithDataVolume()
+    .WithOpenWebUI()
+    .WithLifetime(ContainerLifetime.Persistent);
+
+var llama = ollama.AddModel("llama3.2");
+
 // projects
 var catalog = builder.AddProject<Projects.Catalog>("catalog")
     .WithReference(catalogDb)
     .WithReference(rabbitMq)
+    .WithReference(llama)
     .WaitFor(catalogDb)
-    .WaitFor(rabbitMq);
+    .WaitFor(rabbitMq)
+    .WaitFor(llama);
 
 var basket = builder.AddProject<Projects.Basket>("basket")
     .WithReference(cache)
