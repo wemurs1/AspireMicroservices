@@ -38,14 +38,18 @@ var ollama = builder.AddOllama("ollama", 11434)
 
 var llama = ollama.AddModel("llama3.2");
 
+var embedding = ollama.AddModel("all-minilm");
+
 // projects
 var catalog = builder.AddProject<Projects.Catalog>("catalog")
     .WithReference(catalogDb)
     .WithReference(rabbitMq)
     .WithReference(llama)
+    .WithReference(embedding)
     .WaitFor(catalogDb)
     .WaitFor(rabbitMq)
-    .WaitFor(llama);
+    .WaitFor(llama)
+    .WaitFor(embedding);
 
 var basket = builder.AddProject<Projects.Basket>("basket")
     .WithReference(cache)
